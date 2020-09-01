@@ -1,5 +1,10 @@
 package com.raby.citybot.bot;
 
+import com.raby.citybot.repository.impl.DescriptionRepository;
+import com.raby.citybot.repository.model.Description;
+import com.raby.citybot.repository.specification.FindDescriptionByCityName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -9,6 +14,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.logging.Level;
 
 public class TelegramCityBot extends TelegramLongPollingBot {
+
+    private DescriptionRepository repository;
+
+    @Autowired
+    public TelegramCityBot(DescriptionRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -23,9 +35,10 @@ public class TelegramCityBot extends TelegramLongPollingBot {
                 //(в тот же чат, откуда пришло входящее сообщение)
                 outMessage.setChatId(inMessage.getChatId());
                 //Указываем текст сообщения
-//                outMessage.setText(inMessage.getText());
-                outMessage.setText("Fuck you motherfucker");
-                //Отправляем сообщение
+                outMessage.setText(inMessage.getText());
+                Description description = repository.find(new FindDescriptionByCityName(inMessage.getText())).get(0);
+                outMessage.setText(description.getDescription());
+//                Отправляем сообщение
                 execute(outMessage);
             }
         } catch (TelegramApiException e) {

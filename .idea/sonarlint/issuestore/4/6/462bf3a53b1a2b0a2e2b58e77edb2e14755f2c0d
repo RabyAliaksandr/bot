@@ -1,6 +1,4 @@
 
-Q
-java:S1128	"4Remove this unused import 'java.util.logging.Level'.(…µÛ¶8ÒÊ½ÆÄ.
-]	java:S125"<This block of commented-out lines of code should be removed.(ÐÄëêþÿÿÿÿ8â³ÞÇÄ.
-[
-java:S3400$"9Remove this method and declare a constant for this value.(„ÚãÐúÿÿÿÿ8¦¼¬ÉÄ.
+[	java:S125"<This block of commented-out lines of code should be removed.(ÐÄëêþÿÿÿÿ8¾»×ÉÄ.
+O
+java:S1128"4Remove this unused import 'java.util.logging.Level'.(…µÛ¶8ÒÊ½ÆÄ.
