@@ -21,23 +21,24 @@ public class DescriptionServiceImpl implements CommonService<DescriptionDto> {
         this.repository = repository;
     }
     @Override
-    public void add(DescriptionDto descriptionDto) {
-        repository.add(mapper.toEntity(descriptionDto));
+    public DescriptionDto add(DescriptionDto descriptionDto) {
+        return mapper.toDto(repository.add(mapper.toEntity(descriptionDto)));
     }
 
     @Override
-    public void delete(Long id) {
-        repository.delete(id);
+    public boolean delete(Long id) {
+        return repository.delete(id);
     }
 
     @Override
-    public void update(DescriptionDto descriptionDto) {
-        repository.update(mapper.toEntity(descriptionDto));
+    public DescriptionDto update(DescriptionDto descriptionDto) {
+        return mapper.toDto(repository.update(mapper.toEntity(descriptionDto)));
     }
 
     @Override
     public List<DescriptionDto> query(Specification specification) {
-        return mapper.toListDto(repository.find(specification));
+        System.out.println("now will be thre");
+        return mapper.toListDto(repository.find(specification).orElseThrow(ArithmeticException::new));
     }
 
     public List<DescriptionDto> findDescriptionByNewsName(String name) {

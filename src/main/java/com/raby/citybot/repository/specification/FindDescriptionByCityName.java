@@ -20,7 +20,6 @@ public class FindDescriptionByCityName implements Specification<Description> {
     @Override
     public Predicate toPredicate(Root<Description> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         Predicate predicate = criteriaBuilder.equal(root.join("city").get("name"), name);
-        System.out.println(criteriaBuilder.and(predicate));
         return criteriaBuilder.and(predicate);
     }
 }

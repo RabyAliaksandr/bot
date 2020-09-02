@@ -1,6 +1,7 @@
 package com.raby.citybot.service.impl;
 
 import com.raby.citybot.repository.impl.CityRepository;
+import com.raby.citybot.repository.model.City;
 import com.raby.citybot.service.CommonService;
 import com.raby.citybot.service.dto.CityDto;
 import com.raby.citybot.service.dto.mapper.CityDtoMapper;
@@ -21,22 +22,23 @@ public class CityServiceImpl implements CommonService<CityDto> {
     }
 
     @Override
-    public void add(CityDto cityDto) {
-        repository.add(mapper.toEntity(cityDto));
+    public CityDto add(CityDto cityDto) {
+        return mapper.toDto(repository.add(mapper.toEntity(cityDto)));
     }
 
     @Override
-    public void delete(Long id) {
+    public boolean delete(Long id) {
         repository.delete(id);
+        return repository.delete(id);
     }
 
     @Override
-    public void update(CityDto cityDto) {
-        repository.update(mapper.toEntity(cityDto));
+    public CityDto update(CityDto cityDto) {
+        return mapper.toDto(repository.update(mapper.toEntity(cityDto)));
     }
 
     @Override
     public List<CityDto> query(Specification specification) {
-        return mapper.toListDto(repository.find(specification));
+        return mapper.toListDto(repository.find(specification).get());
     }
 }

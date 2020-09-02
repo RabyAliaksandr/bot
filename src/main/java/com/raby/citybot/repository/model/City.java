@@ -2,6 +2,7 @@ package com.raby.citybot.repository.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

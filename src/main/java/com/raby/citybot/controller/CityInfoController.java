@@ -25,7 +25,7 @@ public class CityInfoController {
         this.descriptionRepository = descriptionRepository;
     }
 
-    @GetMapping("")
+    @GetMapping("sss")
     String hello() {
         return "Hello world";
     }
@@ -34,24 +34,24 @@ public class CityInfoController {
         return "find";
     }
 
-    @PostMapping("")
+    @PostMapping("/city")
     public String addCity(@RequestBody City city) {
         repository.add(city);
         return "Added";
     }
 
-    @PutMapping("")
+    @PutMapping("/city")
     public void update(@RequestBody City city) {
         repository.update(city);
     }
 
-    @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/city/{id}", produces = APPLICATION_JSON_VALUE)
     public void delete(@PathVariable("id") Long id) {
         repository.delete(id);
     }
 
     @PostMapping("fff")
     public Description findDescription(@RequestBody City city) {
-      return  descriptionRepository.find(new FindDescriptionByCityName(city.getName())).get(0);
+      return  descriptionRepository.find(new FindDescriptionByCityName(city.getName())).get().get(0);
     }
 }

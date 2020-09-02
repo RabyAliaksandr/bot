@@ -3,11 +3,8 @@ package com.raby.citybot.repository.configuration;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.hibernate.cfg.Environment;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,23 +17,23 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({"file:C:/Users/wb/IdeaProjects/bot/src/main/resources/application.properties"})
+@PropertySource(value = "file:src/main/resources/application.properties")
 @ComponentScan("com.raby")
 public class RepositoryConfig {
 
 
-    private static final String PROPERTIES_PATH = "C:/Users/wb/IdeaProjects/bot/src/main/resources/hikaricp.properties";
-    @Value("${database.dialect}")
-    private String dialect;
-//    @Value("${database.sessionContext}")
-//    private String sessionContext;
-//    @Value("${database.schema}")
-//    private String schema;
+    private static final String DATA_SOURCE_CLASS_NAME = "dataSourceClassName";
+    private static final String PACKAGE_NAME = "com.raby";
+    private static final String PROPERTIES_PATH = "src/main/resources/hikaricp.properties";
+    @Value("${database.schema}")
+    private String schema;
+    @Value("${dataSource.ClassName}")
+    private String dataSourceClassName;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
-        emf.setPackagesToScan("com.raby");
+        emf.setPackagesToScan(PACKAGE_NAME);
         emf.setDataSource(dataSource());
         emf.setJpaVendorAdapter(createJpaVendorAdapter());
         emf.setJpaProperties(hibernateProperties());
@@ -57,14 +54,8 @@ public class RepositoryConfig {
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-//        properties.setProperty(Environment.DIALECT, dialect);
-//        properties.setProperty(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-        properties.setProperty(Environment.DEFAULT_SCHEMA, "city_info_schema");
-        properties.setProperty("dataSourceClassName", "org.postgresql.ds.PGSimpleDataSource");
-        properties.setProperty("dataSource.user", "postgre");
-        properties.setProperty("dataSource.password", "gfhjkm");
-        properties.setProperty("dataSource.databaseName", "postgres");
-
+        properties.setProperty(Environment.DEFAULT_SCHEMA, schema);
+        properties.setProperty(DATA_SOURCE_CLASS_NAME, dataSourceClassName);
         return properties;
     }
 
