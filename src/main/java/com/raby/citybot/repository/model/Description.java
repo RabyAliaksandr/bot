@@ -7,10 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Embeddable
 @Entity
-@Access(AccessType.FIELD)
-@Table(name = "info")
+//@Access(AccessType.FIELD)
 public class Description implements AbstractEntity, Serializable {
 
     @Id
@@ -19,11 +17,9 @@ public class Description implements AbstractEntity, Serializable {
     @NotNull
     @Size(min = 10, max = 1000, message = "description longer than 1000 characters is invalid")
     private String description;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "city_info",
-            joinColumns = @JoinColumn(name = "info_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "city_id", referencedColumnName = "id"))
-    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @MapsId
+    @JoinColumn(name = "city_id")
     private City city;
 
     public City getCity() {
@@ -48,5 +44,14 @@ public class Description implements AbstractEntity, Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Description{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+//                ", city=" + city +
+                '}';
     }
 }

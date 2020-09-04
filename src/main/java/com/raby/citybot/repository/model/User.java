@@ -1,7 +1,5 @@
 package com.raby.citybot.repository.model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.Objects;
 

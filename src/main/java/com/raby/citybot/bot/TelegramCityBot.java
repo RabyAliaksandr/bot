@@ -25,7 +25,6 @@ public class TelegramCityBot extends TelegramLongPollingBot {
         this.repository = repository;
     }
 
-
     @Override
     public void onUpdateReceived(Update update) {
         try {

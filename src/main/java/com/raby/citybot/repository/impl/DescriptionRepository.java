@@ -2,11 +2,14 @@ package com.raby.citybot.repository.impl;
 
 import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.model.Description;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +21,6 @@ import java.util.Optional;
 
 @Component
 @Transactional
-@Repository
 public class DescriptionRepository implements CommonRepository<Description> {
 
     @PersistenceContext

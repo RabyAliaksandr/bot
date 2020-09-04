@@ -1,17 +1,11 @@
 package com.raby.citybot.repository.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-@Embeddable
 @Entity
-@Access(AccessType.FIELD)
 public class City implements AbstractEntity, Serializable {
 
     @Id
@@ -20,18 +14,23 @@ public class City implements AbstractEntity, Serializable {
     @NotNull(message = "impossible empty name")
     @Size(min = 2, max = 100, message = "name longer than 100 characters is invalid")
     private String name;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "city_info",
-    joinColumns = @JoinColumn(name = "city_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "info_id", referencedColumnName = "id"))
-    @JsonIgnore
+    @OneToOne(mappedBy = "city", cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY, optional = false)
     private Description description;
+
 
     public Description getDescription() {
         return description;
     }
 
     public void setDescription(Description description) {
+        if (description == null) {
+            if (this.description != null) {
+                this.description.setCity(null);
+            }
+        } else {
+            description.setCity(this);
+        }
         this.description = description;
     }
 
@@ -49,5 +48,14 @@ public class City implements AbstractEntity, Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description=" + description +
+                '}';
     }
 }
