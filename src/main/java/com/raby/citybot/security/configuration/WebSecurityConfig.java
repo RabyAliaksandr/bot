@@ -30,7 +30,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String ROLE_ADMIN = "ADMIN";
     private static final String SIGN_IN_URL = "/auth/signin";
     private static final String SIGN_UP_URL = "/auth/signup";
     private CustomUserDetailsService customUserDetailsService;
@@ -82,15 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(SIGN_IN_URL, SIGN_UP_URL)
                 .permitAll()
-//                .antMatchers(HttpMethod.DELETE, "/**")
-////                .hasRole(ROLE_ADMIN)
-//                .antMatchers(HttpMethod.POST, "/**")
-//                .hasRole(ROLE_ADMIN)
-//                .antMatchers(HttpMethod.PUT, "/**")
-//                .hasRole(ROLE_ADMIN)
                 .anyRequest()
                 .authenticated().and().csrf().disable();
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
 }

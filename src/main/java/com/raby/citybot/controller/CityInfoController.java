@@ -1,16 +1,13 @@
 package com.raby.citybot.controller;
 
-import com.raby.citybot.repository.impl.DescriptionRepository;
-import com.raby.citybot.repository.model.City;
-import com.raby.citybot.repository.impl.CityRepository;
-import com.raby.citybot.repository.model.Description;
-import com.raby.citybot.repository.specification.FindDescriptionByCityName;
+import com.raby.citybot.service.CommonService;
 import com.raby.citybot.service.dto.CityDto;
-import com.raby.citybot.service.dto.DescriptionDto;
-import com.raby.citybot.service.dto.mapper.CityDtoMapper;
 import com.raby.citybot.service.impl.CityServiceImpl;
+import com.raby.citybot.service.validator.CheckingExistInDataBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -19,29 +16,41 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @ComponentScan
 public class CityInfoController {
 
-    private CityRepository repository;
-    private CityDtoMapper mapper;
-    private CityServiceImpl cityService;
+    private final CommonService<CityDto> cityService;
+    private final CheckingExistInDataBase checkingExist;
 
     @Autowired
-    public CityInfoController(CityRepository repository, CityDtoMapper mapper, CityServiceImpl cityService) {
-        this.repository = repository;
-        this.mapper = mapper;
+    public CityInfoController(CityServiceImpl cityService, CheckingExistInDataBase checkingExist) {
         this.cityService = cityService;
+        this.checkingExist = checkingExist;
     }
 
     @PostMapping("/city")
-    public City addCity(@RequestBody CityDto city) {
-        return repository.add(mapper.toEntity(city));
+    public ResponseEntity<String> addCity(@RequestBody CityDto city) {
+        if (checkingExist.checkCity(city.getName())) {
+            return new ResponseEntity("This city is already in the database", HttpStatus.BAD_REQUEST);
+        }
+        if (!cityService.add(city)) {
+            return new ResponseEntity("The city has not been added", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity("The city added successfully", HttpStatus.OK);
     }
 
     @PutMapping("/city")
-    public CityDto update(@RequestBody CityDto city) {
-        return cityService.update(city);
+    public ResponseEntity update(@RequestBody CityDto city) {
+        if (cityService.update(city)) {
+            return new ResponseEntity("The city updated successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("The city has not been updated", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping(value = "/city/{id}", produces = APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable("id") Long id) {
-        repository.delete(id);
+    public ResponseEntity delete(@PathVariable("id") Long id) {
+        if (cityService.delete(id)) {
+            return new ResponseEntity("The city deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity("The city has not been deleted", HttpStatus.BAD_REQUEST);
+        }
     }
 }

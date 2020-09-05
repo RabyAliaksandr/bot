@@ -12,6 +12,8 @@ import java.util.List;
 
 public class FindUserByLoginOrEmailSpecification implements Specification<User> {
 
+    private static final String EMAIL = "email";
+    private static final String LOGIN = "login";
     private String loginOrEmail;
 
 
@@ -22,8 +24,8 @@ public class FindUserByLoginOrEmailSpecification implements Specification<User> 
     @Override
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-        Predicate loginPredicate = criteriaBuilder.equal(root.get("email"), loginOrEmail);
-        Predicate emailPredicate = criteriaBuilder.equal(root.get("login"), loginOrEmail);
+        Predicate loginPredicate = criteriaBuilder.equal(root.get(EMAIL), loginOrEmail);
+        Predicate emailPredicate = criteriaBuilder.equal(root.get(LOGIN), loginOrEmail);
         predicates.add(loginPredicate);
         predicates.add(emailPredicate);
         return criteriaBuilder.or(predicates.toArray(new Predicate[]{}));

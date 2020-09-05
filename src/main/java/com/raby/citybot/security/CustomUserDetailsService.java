@@ -6,15 +6,14 @@ import com.raby.citybot.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserServiceImpl userService;
-    private UserDtoMapper userMapper;
+    private final UserServiceImpl userService;
+    private final UserDtoMapper userMapper;
 
     @Autowired
     public CustomUserDetailsService(UserServiceImpl userService, UserDtoMapper userMapper) {
@@ -24,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String usernameOrEmail) {
         User user = userMapper.toEntity(userService.findUserByLoginOrEmail(usernameOrEmail).get(0));
         return UserPrincipal.create(user);
     }

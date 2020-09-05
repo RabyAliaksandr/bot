@@ -1,5 +1,6 @@
 package com.raby.citybot.service.impl;
 
+import com.raby.citybot.repository.exception.CityBotRepositoryException;
 import com.raby.citybot.repository.impl.UserRepositoryImpl;
 import com.raby.citybot.repository.specification.FindUserByEmailSpecification;
 import com.raby.citybot.repository.specification.FindUserByIdSpecification;
@@ -14,7 +15,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -31,8 +31,8 @@ public class UserServiceImpl implements CommonService<UserDto> {
     }
 
     @Override
-    public UserDto add(UserDto userDto) {
-        return userMapper.toDto(userRepository.add(userMapper.toEntity(userDto)));
+    public boolean add(UserDto userDto) {
+        return userRepository.add(userMapper.toEntity(userDto));
     }
 
     @Override
@@ -41,34 +41,48 @@ public class UserServiceImpl implements CommonService<UserDto> {
     }
 
     @Override
-    public UserDto update(UserDto userDto) {
-        return userMapper.toDto(userRepository.update(userMapper.toEntity(userDto)));
+    public boolean update(UserDto userDto) {
+        return userRepository.update(userMapper.toEntity(userDto));
     }
 
     @Override
     public List<UserDto> query(Specification specification) {
-        return userMapper.toListDto(userRepository.find(specification).orElseThrow());
+        try {
+            return userMapper.toListDto(userRepository.find(specification));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
 
     public List<UserDto> findUserByLogin(String login) throws CityBotServiceException {
-        return userMapper.toListDto(userRepository.find(new FindUserByLoginSpecification(login))
-                .orElse(new ArrayList<>()));
+        try {
+            return userMapper.toListDto(userRepository.find(new FindUserByLoginSpecification(login)));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
 
     public List<UserDto> findUserByEmail(String email) throws CityBotServiceException {
-        return userMapper.toListDto(userRepository.find(new FindUserByEmailSpecification(email))
-                .orElse(new ArrayList<>()));
+        try {
+            return userMapper.toListDto(userRepository.find(new FindUserByEmailSpecification(email)));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
 
     public List<UserDto> findUserByLoginOrEmail(String loginOrEmail) throws CityBotServiceException {
-        return userMapper.toListDto(userRepository.find(new FindUserByLoginOrEmailSpecification(loginOrEmail))
-                .orElseThrow(() -> new CityBotServiceException("this user does not exist")));
+        try {
+            return userMapper.toListDto(userRepository.find(new FindUserByLoginOrEmailSpecification(loginOrEmail)));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
 
     public List<UserDto> findUserById(long id) throws CityBotServiceException {
-        return userMapper.toListDto(userRepository.find(new FindUserByIdSpecification(id))
-                .orElseThrow(() -> new CityBotServiceException("this user does not exist")));
+        try {
+            return userMapper.toListDto(userRepository.find(new FindUserByIdSpecification(id)));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
-
-
 }

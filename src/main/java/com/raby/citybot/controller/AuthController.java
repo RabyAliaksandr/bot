@@ -31,11 +31,11 @@ public class AuthController {
     private static final String EMAIL_TAKEN = "Email Address already in use!";
     private static final String REGISTERED_SUCCESS = "User registered successfully";
     private static final String USERS_URL = "/user/{username}";
-    private AuthenticationManager authenticationManager;
-    private UserDtoMapper userMapper;
-    private UserServiceImpl userService;
-    private PasswordEncoder passwordEncoder;
-    private JwtTokenProvider tokenProvider;
+    private final AuthenticationManager authenticationManager;
+    private final UserDtoMapper userMapper;
+    private final UserServiceImpl userService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserDtoMapper userMapper, UserServiceImpl userService,
@@ -46,7 +46,6 @@ public class AuthController {
         this.tokenProvider = tokenProvider;
         this.userService = userService;
     }
-
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -63,7 +62,6 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserDto signUpRequest) {
-        System.out.println(signUpRequest);
         if(!userService.findUserByLogin(signUpRequest.getLogin()).isEmpty()) {
             return new ResponseEntity(new ApiResponse(false, LOGIN_TAKEN),
                     HttpStatus.BAD_REQUEST);
@@ -80,10 +78,10 @@ public class AuthController {
         user.setLogin(signUpRequest.getLogin());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(signUpRequest.getRole());
-        User result = userMapper.toEntity(userService.add(userMapper.toDto(user)));
-        URI location = ServletUriComponentsBuilder
+        userService.add(userMapper.toDto(user));
+            URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path(USERS_URL)
-                .buildAndExpand(result.getName()).toUri();
+                .buildAndExpand().toUri();
         return ResponseEntity.created(location).body(new ApiResponse(true, REGISTERED_SUCCESS));
     }
 }

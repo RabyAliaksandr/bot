@@ -1,15 +1,19 @@
 package com.raby.citybot.service.impl;
 
+import com.raby.citybot.repository.exception.CityBotRepositoryException;
 import com.raby.citybot.repository.impl.DescriptionRepository;
 import com.raby.citybot.repository.specification.FindDescriptionByCityName;
 import com.raby.citybot.service.CommonService;
 import com.raby.citybot.service.dto.DescriptionDto;
 import com.raby.citybot.service.dto.mapper.DescriptionDtoMapper;
+import com.raby.citybot.service.exception.CityBotServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class DescriptionServiceImpl implements CommonService<DescriptionDto> {
 
     private DescriptionDtoMapper mapper;
@@ -21,8 +25,8 @@ public class DescriptionServiceImpl implements CommonService<DescriptionDto> {
         this.repository = repository;
     }
     @Override
-    public DescriptionDto add(DescriptionDto descriptionDto) {
-        return mapper.toDto(repository.add(mapper.toEntity(descriptionDto)));
+    public boolean add(DescriptionDto descriptionDto) {
+        return repository.add(mapper.toEntity(descriptionDto));
     }
 
     @Override
@@ -31,14 +35,17 @@ public class DescriptionServiceImpl implements CommonService<DescriptionDto> {
     }
 
     @Override
-    public DescriptionDto update(DescriptionDto descriptionDto) {
-        return mapper.toDto(repository.update(mapper.toEntity(descriptionDto)));
+    public boolean update(DescriptionDto descriptionDto) {
+        return repository.update(mapper.toEntity(descriptionDto));
     }
 
     @Override
     public List<DescriptionDto> query(Specification specification) {
-        System.out.println("now will be thre");
-        return mapper.toListDto(repository.find(specification).orElseThrow(ArithmeticException::new));
+        try {
+            return mapper.toListDto(repository.find(specification));
+        } catch (CityBotRepositoryException e) {
+            throw new CityBotServiceException(e);
+        }
     }
 
     public List<DescriptionDto> findDescriptionByNewsName(String name) {

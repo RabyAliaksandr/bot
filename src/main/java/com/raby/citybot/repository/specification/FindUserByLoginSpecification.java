@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 public class FindUserByLoginSpecification implements Specification<User> {
 
+    private static final String LOGIN = "login";
     private String userLogin;
 
     public FindUserByLoginSpecification(String userLogin) {
@@ -18,7 +19,7 @@ public class FindUserByLoginSpecification implements Specification<User> {
 
     @Override
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        Predicate userByLogin = criteriaBuilder.equal(root.get("login"), userLogin);
+        Predicate userByLogin = criteriaBuilder.equal(root.get(LOGIN), userLogin);
         return criteriaBuilder.and(userByLogin);
     }
 }

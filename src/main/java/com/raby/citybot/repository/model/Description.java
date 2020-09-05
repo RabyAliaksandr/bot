@@ -6,9 +6,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
-//@Access(AccessType.FIELD)
 public class Description implements AbstractEntity, Serializable {
 
     @Id
@@ -17,9 +17,12 @@ public class Description implements AbstractEntity, Serializable {
     @NotNull
     @Size(min = 10, max = 1000, message = "description longer than 1000 characters is invalid")
     private String description;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @MapsId
+    @OneToOne(fetch = FetchType.EAGER
+            , cascade = CascadeType.MERGE
+    )
+//    @MapsId
     @JoinColumn(name = "city_id")
+    @JsonIgnore
     private City city;
 
     public City getCity() {
@@ -51,7 +54,20 @@ public class Description implements AbstractEntity, Serializable {
         return "Description{" +
                 "id=" + id +
                 ", description='" + description + '\'' +
-//                ", city=" + city +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Description that = (Description) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description);
     }
 }

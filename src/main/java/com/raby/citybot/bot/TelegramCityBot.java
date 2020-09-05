@@ -1,10 +1,11 @@
 package com.raby.citybot.bot;
 
-import com.raby.citybot.repository.impl.DescriptionRepository;
-import com.raby.citybot.repository.model.Description;
-import com.raby.citybot.repository.specification.FindDescriptionByCityName;
+import com.raby.citybot.service.dto.DescriptionDto;
+import com.raby.citybot.service.impl.DescriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,11 +19,10 @@ import java.util.List;
 @ComponentScan
 public class TelegramCityBot extends TelegramLongPollingBot {
 
-    private DescriptionRepository repository;
-
+    private DescriptionServiceImpl service;
     @Autowired
-    public void setRepository(DescriptionRepository repository) {
-        this.repository = repository;
+    public void setService(DescriptionServiceImpl service) {
+        this.service = service;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class TelegramCityBot extends TelegramLongPollingBot {
                 outMessage.setChatId(inMessage.getChatId());
                 //Указываем текст сообщения
                 outMessage.setText(inMessage.getText());
-                List<Description> descriptionList = repository.find(new FindDescriptionByCityName(inMessage.getText())).orElseThrow();
+                List<DescriptionDto> descriptionList = service.findDescriptionByNewsName(inMessage.getText().toLowerCase());
                 if (descriptionList.isEmpty()) {
                     outMessage.setText("Информация о данном городе отсутсвтует");
                 } else {
