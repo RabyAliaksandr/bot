@@ -28,7 +28,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories("com.raby.citybot")
 @EnableTransactionManagement
 @ComponentScan("com.raby.citybot")
-@PropertySource(value = "file:src/test/resources/persistence-student.properties")
+@PropertySource(value = "file:src/test/resources/persistence.properties")
 @Sql({ "schema.sql" })
 public class TestCityBotRepositoryConfiguration {
 

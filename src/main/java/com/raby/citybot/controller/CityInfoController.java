@@ -31,10 +31,7 @@ public class CityInfoController {
     private final CheckingExistInDataBase checkingExist;
 
     @Autowired
-    public CityInfoController(
-//            CommonService<CityDto> cityService,
-                              CheckingExistInDataBase checkingExist) {
-//        this.cityService = cityService;
+    public CityInfoController(CheckingExistInDataBase checkingExist) {
         this.checkingExist = checkingExist;
     }
 

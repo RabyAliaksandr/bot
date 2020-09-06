@@ -3,6 +3,7 @@ package com.raby.citybot.bot;
 import com.raby.citybot.service.dto.DescriptionDto;
 import com.raby.citybot.service.impl.DescriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -17,6 +18,11 @@ import java.util.List;
 @ComponentScan
 public class TelegramCityBot extends TelegramLongPollingBot {
 
+    private static final String message = "There is no information about this city";
+    @Value("${bot.token}")
+    private String token;
+    @Value("${bot.name}")
+    private String name;
     private DescriptionServiceImpl service;
 
     @Autowired
@@ -24,32 +30,20 @@ public class TelegramCityBot extends TelegramLongPollingBot {
         this.service = service;
     }
 
-//    @Autowired
-//    public void setService(DescriptionServiceImpl service) {
-//        this.service = service;
-//    }
-
     @Override
     public void onUpdateReceived(Update update) {
         try {
-            //проверяем есть ли сообщение и текстовое ли оно
             if (update.hasMessage() && update.getMessage().hasText()) {
-                //Извлекаем объект входящего сообщения
                 Message inMessage = update.getMessage();
-                //Создаем исходящее сообщение
                 SendMessage outMessage = new SendMessage();
-                //Указываем в какой чат будем отправлять сообщение
-                //(в тот же чат, откуда пришло входящее сообщение)
                 outMessage.setChatId(inMessage.getChatId());
-                //Указываем текст сообщения
                 outMessage.setText(inMessage.getText());
                 List<DescriptionDto> descriptionList = service.findDescriptionByNewsName(inMessage.getText().toLowerCase());
                 if (descriptionList.isEmpty()) {
-                    outMessage.setText("Информация о данном городе отсутсвтует");
+                    outMessage.setText(message);
                 } else {
                     outMessage.setText(descriptionList.get(0).getDescription());
                 }
-//                Отправляем сообщение
                 execute(outMessage);
             }
         } catch (TelegramApiException e) {
@@ -57,13 +51,12 @@ public class TelegramCityBot extends TelegramLongPollingBot {
         }
     }
 
-
     public String getBotUsername() {
-        return "City_InfoBot";
+        return name;
     }
 
     @Override
     public String getBotToken() {
-        return "1277942386:AAHMyDv_vcjfDBjWidIMkpx4QGYVpSDTE-0";
+        return token;
     }
 }

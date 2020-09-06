@@ -16,7 +16,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
         classes = {RepositoryConfig.class},
