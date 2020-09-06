@@ -22,13 +22,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public UserDetails loadUserByUsername(String usernameOrEmail) {
         User user = userMapper.toEntity(userService.findUserByLoginOrEmail(usernameOrEmail).get(0));
         return UserPrincipal.create(user);
     }
 
-    @Transactional
+//    @Transactional
     public UserDetails loadUserById(Long id) {
         User user = userMapper.toEntity(userService.findUserById(id).get(0));
         return UserPrincipal.create(user);

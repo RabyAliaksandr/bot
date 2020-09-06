@@ -17,7 +17,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -48,7 +51,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getUsernameOrEmail(),
@@ -61,12 +64,12 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody UserDto signUpRequest) {
-        if(!userService.findUserByLogin(signUpRequest.getLogin()).isEmpty()) {
+    public ResponseEntity registerUser(@RequestBody UserDto signUpRequest) {
+        if (!userService.findUserByLogin(signUpRequest.getLogin()).isEmpty()) {
             return new ResponseEntity(new ApiResponse(false, LOGIN_TAKEN),
                     HttpStatus.BAD_REQUEST);
         }
-        if(!userService.findUserByEmail(signUpRequest.getEmail()).isEmpty()) {
+        if (!userService.findUserByEmail(signUpRequest.getEmail()).isEmpty()) {
             return new ResponseEntity(new ApiResponse(false, EMAIL_TAKEN),
                     HttpStatus.BAD_REQUEST);
         }
@@ -79,7 +82,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(signUpRequest.getRole());
         userService.add(userMapper.toDto(user));
-            URI location = ServletUriComponentsBuilder
+        URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path(USERS_URL)
                 .buildAndExpand().toUri();
         return ResponseEntity.created(location).body(new ApiResponse(true, REGISTERED_SUCCESS));

@@ -9,8 +9,6 @@ Msrc/main/java/com/raby/citybot/repository/configuration/RepositoryConfig.java,
 bot.iml,c\d\cd45720a11da26637a1ad5edb3ecc5ce7ea06263
 g
 7src/main/java/com/raby/citybot/bot/TelegramCityBot.java,4\6\462bf3a53b1a2b0a2e2b58e77edb2e14755f2c0d
-I
-src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded
 X
 (src/main/java/com/raby/citybot/Main.java,f\0\f0964de848ee15841442bb70390b0e33abee9414
 q
@@ -79,8 +77,6 @@ v
 Fsrc/main/java/com/raby/citybot/repository/impl/UserRepositoryImpl.java,0\6\06e0cf198ed45848c629a5eda29f88f3284421b8
 y
 Isrc/main/java/com/raby/citybot/security/configuration/AuditingConfig.java,1\c\1c5561bb7b9ed07272135559ab5d3f1758b48e19
-Å
-Qsrc/main/java/com/raby/citybot/security/configuration/ControllerSpringConfig.java,a\0\a03c6268f463c6b47ef883e896c59d514352fd7c
 Ü
 Vsrc/main/java/com/raby/citybot/security/configuration/JwtAuthenticationEntryPoint.java,5\9\59db51d917368de3ff5c2b88258f1b7df813bf5b
 |

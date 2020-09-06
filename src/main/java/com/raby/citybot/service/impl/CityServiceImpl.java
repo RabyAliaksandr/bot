@@ -1,35 +1,31 @@
 package com.raby.citybot.service.impl;
 
+import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
-import com.raby.citybot.repository.impl.CityRepository;
-import com.raby.citybot.repository.impl.DescriptionRepository;
 import com.raby.citybot.repository.model.City;
-import com.raby.citybot.repository.model.Description;
 import com.raby.citybot.repository.specification.FindCityByNameSpecification;
-import com.raby.citybot.service.CommonService;
+import com.raby.citybot.service.CityService;
 import com.raby.citybot.service.dto.CityDto;
-import com.raby.citybot.service.dto.DescriptionDto;
 import com.raby.citybot.service.dto.mapper.CityDtoMapper;
-import com.raby.citybot.service.dto.mapper.DescriptionDtoMapper;
 import com.raby.citybot.service.exception.CityBotServiceException;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
-public class CityServiceImpl implements CommonService<CityDto> {
+public class CityServiceImpl implements CityService {
 
     private CityDtoMapper mapper;
-    private CityRepository repository;
+    private CommonRepository<City> repository;
 
     @Autowired
-    public CityServiceImpl(CityDtoMapper mapper, CityRepository cityRepository) {
+    public CityServiceImpl(CityDtoMapper mapper, CommonRepository<City> repository) {
         this.mapper = mapper;
-        this.repository = cityRepository;
+        this.repository = repository;
     }
 
     @Override
@@ -41,7 +37,6 @@ public class CityServiceImpl implements CommonService<CityDto> {
 
     @Override
     public boolean delete(Long id) {
-        repository.delete(id);
         return repository.delete(id);
     }
 
@@ -50,6 +45,10 @@ public class CityServiceImpl implements CommonService<CityDto> {
     public boolean update(CityDto cityDto) {
         String lowerCaseCityName = cityDto.getName().toLowerCase();
         cityDto.setName(lowerCaseCityName);
+        CityDto cityInDataBase = findCityByName(cityDto.getName());
+        if (cityInDataBase != null && cityDto.getName().equals(cityInDataBase.getName()) && cityDto.getId() != cityInDataBase.getId()) {
+            throw new CityBotServiceException("This city already exist");
+        }
         return repository.update(mapper.toEntity(cityDto));
     }
 

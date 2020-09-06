@@ -1,7 +1,9 @@
 package com.raby.citybot.service.impl;
 
+import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
 import com.raby.citybot.repository.impl.UserRepositoryImpl;
+import com.raby.citybot.repository.model.User;
 import com.raby.citybot.repository.specification.FindUserByEmailSpecification;
 import com.raby.citybot.repository.specification.FindUserByIdSpecification;
 import com.raby.citybot.repository.specification.FindUserByLoginOrEmailSpecification;
@@ -21,11 +23,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements CommonService<UserDto> {
 
-    private UserRepositoryImpl userRepository;
+    private CommonRepository<User> userRepository;
     private UserDtoMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepositoryImpl userRepository, UserDtoMapper userMapper) {
+    public UserServiceImpl(CommonRepository<User> userRepository, UserDtoMapper userMapper) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
@@ -54,7 +56,7 @@ public class UserServiceImpl implements CommonService<UserDto> {
         }
     }
 
-    public List<UserDto> findUserByLogin(String login) throws CityBotServiceException {
+    public List<UserDto> findUserByLogin(String login) {
         try {
             return userMapper.toListDto(userRepository.find(new FindUserByLoginSpecification(login)));
         } catch (CityBotRepositoryException e) {
@@ -62,7 +64,7 @@ public class UserServiceImpl implements CommonService<UserDto> {
         }
     }
 
-    public List<UserDto> findUserByEmail(String email) throws CityBotServiceException {
+    public List<UserDto> findUserByEmail(String email) {
         try {
             return userMapper.toListDto(userRepository.find(new FindUserByEmailSpecification(email)));
         } catch (CityBotRepositoryException e) {
@@ -70,7 +72,7 @@ public class UserServiceImpl implements CommonService<UserDto> {
         }
     }
 
-    public List<UserDto> findUserByLoginOrEmail(String loginOrEmail) throws CityBotServiceException {
+    public List<UserDto> findUserByLoginOrEmail(String loginOrEmail) {
         try {
             return userMapper.toListDto(userRepository.find(new FindUserByLoginOrEmailSpecification(loginOrEmail)));
         } catch (CityBotRepositoryException e) {
@@ -78,7 +80,7 @@ public class UserServiceImpl implements CommonService<UserDto> {
         }
     }
 
-    public List<UserDto> findUserById(long id) throws CityBotServiceException {
+    public List<UserDto> findUserById(long id) {
         try {
             return userMapper.toListDto(userRepository.find(new FindUserByIdSpecification(id)));
         } catch (CityBotRepositoryException e) {

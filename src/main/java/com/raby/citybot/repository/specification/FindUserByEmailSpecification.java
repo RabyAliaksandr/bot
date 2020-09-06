@@ -11,14 +11,14 @@ import javax.persistence.criteria.Root;
 public class FindUserByEmailSpecification implements Specification<User> {
 
     private static final String EMAIL = "email";
-    private String email;
+    private String userEmail;
 
     public FindUserByEmailSpecification(String email) {
-        this.email = email;
+        this.userEmail = email;
     }
 
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        Predicate predicate = criteriaBuilder.equal(root.get(EMAIL), email);
+        Predicate predicate = criteriaBuilder.equal(root.get(EMAIL), userEmail);
         return criteriaBuilder.and(predicate);
     }
 }

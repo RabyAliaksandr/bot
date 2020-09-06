@@ -9,7 +9,10 @@ import java.util.List;
 public interface CommonRepository<E extends AbstractEntity> {
 
     boolean add(E entity);
+
     boolean update(E entity);
+
     boolean delete(long id);
-    List<E> find(Specification specification) throws CityBotRepositoryException;
+
+    List<E> find(Specification<E> specification) throws CityBotRepositoryException;
 }

@@ -20,16 +20,10 @@ import java.util.Optional;
 
 @Component
 @Transactional
-public class CityRepository implements CommonRepository<City> {
+public class CityRepositoryImpl implements CommonRepository<City> {
 
     @PersistenceContext
     private EntityManager entityManager;
-    private DescriptionRepository descriptionRepository;
-
-    @Autowired
-    public void setDescriptionRepository(DescriptionRepository descriptionRepository) {
-        this.descriptionRepository = descriptionRepository;
-    }
 
     @Override
     public boolean add(City entity) {
@@ -52,7 +46,7 @@ public class CityRepository implements CommonRepository<City> {
     @Override
     public boolean delete(long id) {
         City city = entityManager.find(City.class, id);
-        if (city == null)  {
+        if (city == null) {
             return false;
         }
         entityManager.remove(city);

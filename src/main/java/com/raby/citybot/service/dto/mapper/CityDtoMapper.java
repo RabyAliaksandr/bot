@@ -19,15 +19,12 @@ public class CityDtoMapper extends AbstractMapper<CityDto, City> {
 
     @Override
     public City toEntity(CityDto cityDto) {
-        System.out.println(cityDto + "it is mapper tot entity");
-        City city =  modelMapper.map(cityDto, City.class);
-        System.out.println(city + "it is mapped");
+        City city = modelMapper.map(cityDto, City.class);
         return city;
     }
 
     @Override
     public CityDto toDto(City city) {
-        System.out.println(city + " it is mapper to Dto");
         return modelMapper.map(city, CityDto.class);
     }
 

@@ -20,7 +20,6 @@ public class Description implements AbstractEntity, Serializable {
     @OneToOne(fetch = FetchType.EAGER
             , cascade = CascadeType.MERGE
     )
-//    @MapsId
     @JoinColumn(name = "city_id")
     @JsonIgnore
     private City city;

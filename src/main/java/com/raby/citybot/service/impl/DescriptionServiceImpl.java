@@ -1,7 +1,8 @@
 package com.raby.citybot.service.impl;
 
+import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
-import com.raby.citybot.repository.impl.DescriptionRepository;
+import com.raby.citybot.repository.model.Description;
 import com.raby.citybot.repository.specification.FindDescriptionByCityName;
 import com.raby.citybot.service.CommonService;
 import com.raby.citybot.service.dto.DescriptionDto;
@@ -17,13 +18,14 @@ import java.util.List;
 public class DescriptionServiceImpl implements CommonService<DescriptionDto> {
 
     private DescriptionDtoMapper mapper;
-    private DescriptionRepository repository;
+    private CommonRepository<Description> repository;
 
     @Autowired
-    public DescriptionServiceImpl(DescriptionDtoMapper mapper, DescriptionRepository repository){
+    public DescriptionServiceImpl(DescriptionDtoMapper mapper, CommonRepository<Description> repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
+
     @Override
     public boolean add(DescriptionDto descriptionDto) {
         return repository.add(mapper.toEntity(descriptionDto));

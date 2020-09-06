@@ -12,15 +12,15 @@ public class FindDescriptionByCityName implements Specification<Description> {
 
     private static final String CITY = "city";
     private static final String NAME = "name";
-    private String name;
+    private String cityName;
 
     public FindDescriptionByCityName(String name) {
-        this.name = name;
+        this.cityName = name;
     }
 
     @Override
     public Predicate toPredicate(Root<Description> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        Predicate predicate = criteriaBuilder.equal(root.join(CITY).get(NAME), name);
+        Predicate predicate = criteriaBuilder.equal(root.join(CITY).get(NAME), cityName);
         return criteriaBuilder.and(predicate);
     }
 }

@@ -1,6 +1,5 @@
 package com.raby.citybot.service.dto;
 
-import com.raby.citybot.repository.model.Description;
 import com.raby.citybot.service.dto.mapper.AbstractDto;
 
 

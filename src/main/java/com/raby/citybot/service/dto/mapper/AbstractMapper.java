@@ -16,7 +16,10 @@ public abstract class AbstractMapper<D extends AbstractDto, E extends AbstractEn
     }
 
     protected abstract E toEntity(D d);
+
     protected abstract D toDto(E e);
+
     protected abstract List<D> toListDto(List<E> list);
+
     protected abstract List<E> toListEntity(List<D> list);
 }

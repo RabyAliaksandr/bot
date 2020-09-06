@@ -8,6 +8,7 @@ public class ApiResponse {
     private String message;
     private List<String> messages;
     private Date timestamp;
+    private int errorCode;
 
     public ApiResponse(Boolean success, String message) {
         this.success = success;
@@ -18,6 +19,14 @@ public class ApiResponse {
         this.success = success;
         this.messages = messages;
         this.timestamp = timestamp;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
     public Boolean getSuccess() {

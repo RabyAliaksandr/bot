@@ -2,6 +2,8 @@ package com.raby.citybot.security;
 
 
 import io.jsonwebtoken.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
@@ -14,8 +16,7 @@ import java.util.Date;
 @ComponentScan
 @PropertySource(value = "file:src/main/resources/application.properties")
 public class JwtTokenProvider {
-
-
+    private static final Logger logger = LogManager.getLogger(JwtTokenProvider.class);
     @Value("${app.jwtSecret}")
     private String jwtSecret;
     @Value("${app.jwtExpirationInMs}")
@@ -49,15 +50,15 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
-//            logger.error("Invalid JWT signature");
+            logger.error("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
-//            logger.error("Invalid JWT token");
+            logger.error("Invalid JWT token");
         } catch (ExpiredJwtException ex) {
-//            logger.error("Expired JWT token");
+            logger.error("Expired JWT token");
         } catch (UnsupportedJwtException ex) {
-//            logger.error("Unsupported JWT token");
+            logger.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-//            logger.error("JWT claims string is empty.");
+            logger.error("JWT claims string is empty.");
         }
         return false;
     }

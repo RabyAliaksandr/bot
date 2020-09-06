@@ -3,9 +3,7 @@ package com.raby.citybot.bot;
 import com.raby.citybot.service.dto.DescriptionDto;
 import com.raby.citybot.service.impl.DescriptionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,10 +18,16 @@ import java.util.List;
 public class TelegramCityBot extends TelegramLongPollingBot {
 
     private DescriptionServiceImpl service;
+
     @Autowired
-    public void setService(DescriptionServiceImpl service) {
+    public TelegramCityBot(DescriptionServiceImpl service) {
         this.service = service;
     }
+
+//    @Autowired
+//    public void setService(DescriptionServiceImpl service) {
+//        this.service = service;
+//    }
 
     @Override
     public void onUpdateReceived(Update update) {

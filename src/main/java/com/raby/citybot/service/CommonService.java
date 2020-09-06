@@ -8,7 +8,10 @@ import java.util.List;
 public interface CommonService<E extends AbstractDto> {
 
     boolean add(E e);
+
     boolean delete(Long id);
+
     boolean update(E e);
-    List<E> query(Specification specification);
+
+    List<E> query(Specification<E> specification);
 }

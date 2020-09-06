@@ -791,7 +791,7 @@ true posixrules
       <ObjectId>12938</ObjectId>
       <Comment>default administrative connection database</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1102</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1145</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|16465|16467|1
 sequence|table|16507|16509|1
@@ -826,7 +826,7 @@ sequence|table|16578|16554|1
       <ObjectId>16393</ObjectId>
       <StateNumber>570</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1103</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1146</IntrospectionStateNumber>
     </schema>
     <schema id="10" parent="2" name="information_schema">
       <ObjectId>12648</ObjectId>
@@ -959,7 +959,7 @@ sequence|table|16578|16554|1
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>846</StateNumber>
+      <StateNumber>1138</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <index id="33" parent="28" name="city_id_uindex">
@@ -975,14 +975,20 @@ sequence|table|16578|16554|1
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="35" parent="28" name="city_pk">
+    <index id="35" parent="28" name="city_name_uindex">
+      <ObjectId>16621</ObjectId>
+      <StateNumber>1144</StateNumber>
+      <ColNames>name</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="36" parent="28" name="city_pk">
       <ObjectId>16515</ObjectId>
       <StateNumber>834</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>city_pk</UnderlyingIndexName>
     </key>
-    <column id="36" parent="29" name="id">
+    <column id="37" parent="29" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
@@ -990,35 +996,35 @@ sequence|table|16578|16554|1
       <DefaultExpression>nextval(&apos;city_info_schema.description_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>20</TypeId>
     </column>
-    <column id="37" parent="29" name="description">
+    <column id="38" parent="29" name="description">
       <Position>2</Position>
       <DataType>varchar(1000)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>895</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="38" parent="29" name="city_id">
+    <column id="39" parent="29" name="city_id">
       <Position>3</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>992</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="39" parent="29" name="description_pk">
+    <index id="40" parent="29" name="description_pk">
       <ObjectId>16560</ObjectId>
       <StateNumber>895</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="40" parent="29" name="description_pk">
+    <key id="41" parent="29" name="description_pk">
       <ObjectId>16561</ObjectId>
       <StateNumber>895</StateNumber>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>description_pk</UnderlyingIndexName>
     </key>
-    <foreign-key id="41" parent="29" name="description_city_id_fk">
+    <foreign-key id="42" parent="29" name="description_city_id_fk">
       <ObjectId>16609</ObjectId>
       <StateNumber>1081</StateNumber>
       <ColNames>city_id</ColNames>
@@ -1030,7 +1036,7 @@ sequence|table|16578|16554|1
       <OnDelete>cascade</OnDelete>
       <OnUpdate>cascade</OnUpdate>
     </foreign-key>
-    <column id="42" parent="30" name="id">
+    <column id="43" parent="30" name="id">
       <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
@@ -1038,62 +1044,62 @@ sequence|table|16578|16554|1
       <DefaultExpression>nextval(&apos;city_info_schema.user_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>20</TypeId>
     </column>
-    <column id="43" parent="30" name="name">
+    <column id="44" parent="30" name="name">
       <Position>2</Position>
       <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>664</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="44" parent="30" name="surname">
+    <column id="45" parent="30" name="surname">
       <Position>3</Position>
       <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>664</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="45" parent="30" name="email">
+    <column id="46" parent="30" name="email">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>664</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="46" parent="30" name="login">
+    <column id="47" parent="30" name="login">
       <Position>5</Position>
       <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>664</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="47" parent="30" name="password">
+    <column id="48" parent="30" name="password">
       <Position>6</Position>
       <DataType>varchar(60)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>684</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="48" parent="30" name="role">
+    <column id="49" parent="30" name="role">
       <Position>7</Position>
       <DataType>varchar|0s</DataType>
       <StateNumber>731</StateNumber>
       <DefaultExpression>USER</DefaultExpression>
       <TypeId>1043</TypeId>
     </column>
-    <index id="49" parent="30" name="user_id_uindex">
+    <index id="50" parent="30" name="user_id_uindex">
       <ObjectId>16474</ObjectId>
       <StateNumber>681</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="50" parent="30" name="user_pk">
+    <index id="51" parent="30" name="user_pk">
       <ObjectId>16475</ObjectId>
       <StateNumber>681</StateNumber>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="51" parent="30" name="user_pk">
+    <key id="52" parent="30" name="user_pk">
       <ObjectId>16476</ObjectId>
       <StateNumber>666</StateNumber>
       <ColNames>id</ColNames>

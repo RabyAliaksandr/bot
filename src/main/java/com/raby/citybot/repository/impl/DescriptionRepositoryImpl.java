@@ -2,7 +2,6 @@ package com.raby.citybot.repository.impl;
 
 import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
-import com.raby.citybot.repository.model.City;
 import com.raby.citybot.repository.model.Description;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.util.Optional;
 
 @Component
 @Transactional
-public class DescriptionRepository implements CommonRepository<Description> {
+public class DescriptionRepositoryImpl implements CommonRepository<Description> {
 
     @PersistenceContext
     EntityManager entityManager;
@@ -27,7 +26,7 @@ public class DescriptionRepository implements CommonRepository<Description> {
     @Override
     public boolean add(Description entity) {
         entityManager.persist(entity);
-        return entity.equals(entityManager.find(City.class, entity.getId()));
+        return entity.equals(entityManager.find(Description.class, entity.getId()));
     }
 
     @Override

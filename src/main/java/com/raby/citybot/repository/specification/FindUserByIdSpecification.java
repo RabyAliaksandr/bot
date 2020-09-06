@@ -11,14 +11,14 @@ import javax.persistence.criteria.Root;
 public class FindUserByIdSpecification implements Specification<User> {
 
     private static final String ID = "id";
-    private Long id;
+    private Long userId;
 
     public FindUserByIdSpecification(Long id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        Predicate predicate = criteriaBuilder.equal(root.get(ID), id);
+        Predicate predicate = criteriaBuilder.equal(root.get(ID), userId);
         return criteriaBuilder.and(predicate);
     }
 }

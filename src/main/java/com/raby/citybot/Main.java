@@ -9,8 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.telegram.telegrambots.ApiContextInitializer;
 
-import java.io.FileNotFoundException;
-
 @EnableAutoConfiguration(exclude = {
         DataSourceAutoConfiguration.class,
         WebMvcAutoConfiguration.class,
@@ -21,7 +19,7 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         ApiContextInitializer.init();
         SpringApplication.run(Main.class, args);
     }

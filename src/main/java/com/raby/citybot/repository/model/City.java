@@ -17,13 +17,10 @@ public class City implements AbstractEntity, Serializable {
     @NotNull(message = "impossible empty name")
     @Size(min = 2, max = 100, message = "name longer than 100 characters is invalid")
     private String name;
-    @OneToOne(mappedBy = "city", cascade = CascadeType.PERSIST
-            ,
-    fetch = FetchType.LAZY, optional = false
-    )
+    @OneToOne(mappedBy = "city", cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY, optional = false)
     @JsonIgnore
     private Description description;
-
 
     public Description getDescription() {
         return description;
