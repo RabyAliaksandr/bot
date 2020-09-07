@@ -1,7 +1,6 @@
 package com.raby.citybot.repository.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +8,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -29,11 +25,12 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @ComponentScan("com.raby.citybot")
 @PropertySource(value = "file:src/test/resources/persistence.properties")
-@Sql({ "schema.sql" })
+@Sql({"schema.sql"})
 public class TestCityBotRepositoryConfiguration {
 
     @Autowired
     private Environment env;
+
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -65,6 +62,7 @@ public class TestCityBotRepositoryConfiguration {
     private JpaVendorAdapter createJpaVendorAdapter() {
         return new HibernateJpaVendorAdapter();
     }
+
     @Bean
     public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
         return new HandlerMappingIntrospector();

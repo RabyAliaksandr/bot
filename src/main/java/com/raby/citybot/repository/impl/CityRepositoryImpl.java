@@ -4,7 +4,6 @@ import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
 import com.raby.citybot.repository.model.City;
 import com.raby.citybot.repository.model.Description;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

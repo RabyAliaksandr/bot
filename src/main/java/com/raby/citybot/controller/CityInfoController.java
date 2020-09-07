@@ -2,7 +2,6 @@ package com.raby.citybot.controller;
 
 import com.raby.citybot.service.CommonService;
 import com.raby.citybot.service.dto.CityDto;
-import com.raby.citybot.service.impl.CityServiceImpl;
 import com.raby.citybot.service.validator.CheckingExistInDataBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;

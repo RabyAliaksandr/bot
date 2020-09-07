@@ -2,7 +2,6 @@ package com.raby.citybot.service.impl;
 
 import com.raby.citybot.repository.CommonRepository;
 import com.raby.citybot.repository.exception.CityBotRepositoryException;
-import com.raby.citybot.repository.impl.UserRepositoryImpl;
 import com.raby.citybot.repository.model.User;
 import com.raby.citybot.repository.specification.FindUserByEmailSpecification;
 import com.raby.citybot.repository.specification.FindUserByIdSpecification;

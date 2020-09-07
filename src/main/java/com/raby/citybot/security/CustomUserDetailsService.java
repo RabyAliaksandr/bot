@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
@@ -28,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserPrincipal.create(user);
     }
 
-//    @Transactional
+    //    @Transactional
     public UserDetails loadUserById(Long id) {
         User user = userMapper.toEntity(userService.findUserById(id).get(0));
         return UserPrincipal.create(user);
