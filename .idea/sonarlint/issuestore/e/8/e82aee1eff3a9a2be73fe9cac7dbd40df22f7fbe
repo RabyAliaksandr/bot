@@ -1,9 +1,0 @@
-
-S
-java:S1128"6Remove this unused import 'org.hibernate.Transaction'.(ìÌè³8ÁÑú¬Å.
-T
-java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8þÿŒ­Å.
-b
-java:S1128"@Remove this unused import 'javax.persistence.EntityTransaction'.(¶“çðüÿÿÿÿ8þÿŒ­Å.
-h
-java:S1128	"FRemove this unused import 'org.springframework.stereotype.Repository'.(¦ýÍýüÿÿÿÿ8ßÔ¼®Å.

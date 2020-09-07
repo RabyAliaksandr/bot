@@ -1,9 +1,0 @@
-
-T
-java:S36553"7Call "Optional#isPresent()" before accessing the value.(Î½ðæ8ßºØ÷Ä.
-`
-java:S1128"CRemove this unused import 'com.raby.citybot.repository.model.City'.(žíÆÏ8®³Ù÷Ä.
-[
-java:S1068"9Remove this unused "descriptionRepository" private field.(½à¬Ëýÿÿÿÿ8¹ÂÁ®Å.
-Z
-java:S1068"8Remove this unused "descriptionDtoMapper" private field.(ˆ…Ú³þÿÿÿÿ8¹ÂÁ®Å.
