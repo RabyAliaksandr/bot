@@ -17,10 +17,10 @@ import org.telegram.telegrambots.ApiContextInitializer;
 @ComponentScan
 @EnableWebMvc
 
-public class Main {
+public class Application {
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }
