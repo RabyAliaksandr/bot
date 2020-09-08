@@ -1,0 +1,4 @@
+com\raby\citybot\controller\CityInfoControllerTest.class
+com\raby\citybot\repository\configuration\TestCityBotRepositoryConfiguration.class
+com\raby\citybot\repository\repository\CityRepositoryTest.class
+com\raby\citybot\service\CityServiceTest.class

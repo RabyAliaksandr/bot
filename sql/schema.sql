@@ -1,25 +1,25 @@
 create SCHEMA IF NOT EXISTS city_info_schema;
---set search_path = news;
+set search_path = city_info_schema;
 
-create table user
-(
-    id bigint
-        constraint user_pk
-            primary key,
-    name     varchar(20) not null,
-    surname  varchar(20) not null,
-    login    varchar(30) not null,
-    password varchar(30) not null,
-    email varchar(60) not null,
-    role varchar(20) not null,
-);
+
+
+ create table "user"
+ (
+     id       bigserial
+         constraint user_pk
+             primary key,
+     name     varchar(20) not null,
+     surname  varchar(20) not null,
+     login    varchar(30) not null,
+     password varchar(30) not null
+ );
 
 create table city
 (
     id      bigint
         constraint city_pk
             primary key,
-    name    varchar(100) not null,
+    name    varchar(100) not null
 );
 
 
